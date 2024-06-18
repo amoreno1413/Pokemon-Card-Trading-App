@@ -44,6 +44,7 @@ class MainWindow(QMainWindow):
         self.win = None
         self.inWin = None
         self.delC = None
+        self.imgWindow = None
         self.setWindowTitle("Trading App")
         self.splitter = QSplitter()
         leftLayout = QVBoxLayout()
@@ -120,8 +121,10 @@ class MainWindow(QMainWindow):
 
     # Function to open card img in new window
     def openCardView(self, imgPath):
-        img = ImageWindow(imgPath, self.resultList, self)
-        img.show()
+        if self.imgWindow is not None:
+            self.imgWindow.close()
+        self.imgWindow = ImageWindow(imgPath, self.resultList, self)
+        self.imgWindow.show()
 
     def updateWindowShow(self):
         self.win = UpdateWindow(self.conn, self.cur)
