@@ -2,22 +2,20 @@ import os
 import sqlite3
 
 from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QPixmap, QIcon, QIntValidator, QFont, QDoubleValidator
+from PyQt5.QtGui import QPixmap, QIcon, QFont, QDoubleValidator
 from PyQt5.QtWidgets import QMainWindow, QDialog
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QComboBox, QCompleter, \
     QListWidget, QListWidgetItem, QSizePolicy, QSplitter, QSpinBox, QPushButton, QHBoxLayout, QFormLayout
-from pyqt_slideshow import SlideShow
 
 
 class ImageWindow(QDialog):
     PLACEHOLDER_IMAGE_PATH = os.path.join('Images', 'Placeholder.jpg')
 
-    def __init__(self, imgPath, resultList, parent=None):
+    def __init__(self, imgPath, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Card Viewer")
         self.setGeometry(100, 100, 400, 400)
         self.label = QLabel()
-
 
         # Set pixmap to a placeholder img if the specified img path does not exist
         if not os.path.isfile(imgPath):
@@ -33,7 +31,6 @@ class ImageWindow(QDialog):
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.close()
-
 
 
 class MainWindow(QMainWindow):
@@ -123,7 +120,7 @@ class MainWindow(QMainWindow):
     def openCardView(self, imgPath):
         if self.imgWindow is not None:
             self.imgWindow.close()
-        self.imgWindow = ImageWindow(imgPath, self.resultList, self)
+        self.imgWindow = ImageWindow(imgPath, self)
         self.imgWindow.show()
 
     def updateWindowShow(self):
