@@ -19,7 +19,7 @@ This app helps you make informed decisions about the value of your Pokémon card
 
 At the moment the card database contains cards from D/P-S/V (Excluding Promos), older cards will be added in the future!
 
-Prices updated as of 6/18
+Prices updated as of 7/15
 
 Happy trading!
 
