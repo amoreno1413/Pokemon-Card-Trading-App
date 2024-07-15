@@ -225,6 +225,7 @@ class MainWindow(QMainWindow):
                     self.filterBox.addItem(ctype)
                 item = QListWidgetItem(text)
                 item.imgPath = imgPath
+
                 self.resultList.addItem(item)
 
         else:
