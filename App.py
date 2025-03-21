@@ -29,7 +29,7 @@ class ImageWindow(QDialog):
         self.setLayout(layout)
 
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.LeftButton or  event.key() == Qt.Key_Escape:
             self.close()
 
 
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         self.filterBox = QComboBox()
         self.filterBox.setToolTip("Set the card filter. Default value is 'All' ")
         self.photo = QLabel()
-        self.photo.setPixmap(QPixmap('Images\Placeholder.jpg'))
+        self.photo.setPixmap(QPixmap(r'Images\Placeholder.jpg'))
 
         self.buttonLayout = QHBoxLayout()
         self.updateBtn = QPushButton()
@@ -110,6 +110,7 @@ class MainWindow(QMainWindow):
 
         completer.activated.connect(self.updateLabel)
         self.resultList.itemClicked.connect(self.resultItemClicked)
+        self.resultList.setFocusPolicy(Qt.StrongFocus)
         self.filterBox.activated.connect(self.filter)
         self.inputPercentage.valueChanged.connect(self.updateLabel)
         self.updateBtn.clicked.connect(self.updateWindowShow)
@@ -154,7 +155,7 @@ class MainWindow(QMainWindow):
         imgPath = os.path.join("Images", cset, f"{name}.jpg")
 
         if not os.path.isfile(imgPath):
-            self.photo.setPixmap(QPixmap('Images\Placeholder.jpg'))
+            self.photo.setPixmap(QPixmap(r'Images\Placeholder.jpg'))
         else:
             self.photo.setPixmap(QPixmap(imgPath))
 
@@ -254,6 +255,14 @@ class MainWindow(QMainWindow):
 
     def resultItemClicked(self, item):
         self.openCardView(item.imgPath)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            selectedCard = self.resultList.selectedItems()
+            if selectedCard:
+                self.resultItemClicked(selectedCard[0])
+            else:
+                super().keyPressEvent(event)
 
 
 class UpdateWindow(QWidget):
